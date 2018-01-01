@@ -15,7 +15,7 @@ The goals / steps of this project are the following:
 [image3]: ./output_images/normalize_feats.png
 [image4]: ./output_images/sliding_window_search.jpg
 [image5]: ./output_images/final_pipeline.jpg
-[image6]: ./examples/labels_map.png
+[image6]: ./output_images/filter.jpg
 [image7]: ./examples/output_bboxes.png
 [video1]: ./project_video.mp4
 
@@ -79,26 +79,17 @@ Ultimately I searched on two scales (128x128, 96x96) using YCrCb 3-channel HOG f
 ### Video Implementation
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+
+Here's a [link to my video result](./project_video_with_box.mp4)
 
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+I apply filtering using the heatmap which is done in the code cell under the title `3.1 Heatmap Thresholding` as well as in `add_heat()` and `apply_threshold()` functions in the `lessions_functions.py` in lines 209 to 222. I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
 
-Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
+Here's an example result showing the heatmap from windows identified by the SVM classifier as containing vehicles on the right. On the left of the graph, the bounding boxes are drawn after applying a threshold of `0.8` to the heatmap.
 
-### Here are six frames and their corresponding heatmaps:
-
-![alt text][image5]
-
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
 ![alt text][image6]
-
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
-
-
 
 ---
 
