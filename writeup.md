@@ -16,8 +16,6 @@ The goals / steps of this project are the following:
 [image4]: ./output_images/sliding_window_search.jpg
 [image5]: ./output_images/final_pipeline.jpg
 [image6]: ./output_images/filter.jpg
-[image7]: ./examples/output_bboxes.png
-[video1]: ./project_video.mp4
 
 Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
@@ -97,5 +95,4 @@ Here's an example result showing the heatmap from windows identified by the SVM 
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
-
+In my implementation of this project, I find it difficult to entirely eliminate false positives and to draw boxes around each vehicle as two vehicles gets very close from the view of the camera. In order to reduce false positives and stablize the boxes drawn for vehicles, I implement a pipeline that collects the windows identified to have vehicle for consecutive 5 frames and then draw boxes based on heatmap created by all the previous 5 frames. In this way, false positives that appear in one frame and disappear will be filtered out. One way that could improve my pipeline maybe to use more than one classifier. If more classifiers like NN, decision trees are trained, then it might be easier to draw boxes that are more precise.

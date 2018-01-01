@@ -1,0 +1,6 @@
+vehicles/
+non-vehicles/
+.ipynb_checkpoints/
+__pycache__/
+test_videos_output/
+*pkl

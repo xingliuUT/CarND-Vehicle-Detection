@@ -58,45 +58,7 @@ def extract_features(imgs, color_space='BGR', spatial_size=(32, 32),
     features = []
     # Iterate through the list of images
     for file in imgs:
-#        file_features = []
-        # Read in each one by one
-        #image = mpimg.imread(file)
         image = cv2.imread(file)
-#        # apply color conversion if other than 'RGB'
-#        if color_space != 'BGR':
-#            if color_space == 'HSV':
-#                feature_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-#            elif color_space == 'LUV':
-#                feature_image = cv2.cvtColor(image, cv2.COLOR_BGR2LUV)
-#            elif color_space == 'HLS':
-#                feature_image = cv2.cvtColor(image, cv2.COLOR_BGR2HLS)
-#            elif color_space == 'YUV':
-#                feature_image = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
-#            elif color_space == 'YCrCb':
-#                feature_image = cv2.cvtColor(image, cv2.COLOR_BGR2YCrCb)
-#        else: feature_image = np.copy(image)     
-
-#        if spatial_feat == True:
-#            spatial_features = bin_spatial(feature_image, size=spatial_size)
-#            file_features.append(spatial_features)
-#        if hist_feat == True:
-#            # Apply color_hist()
-#            hist_features = color_hist(feature_image, nbins=hist_bins)
-#            file_features.append(hist_features)
-#        if hog_feat == True:
-#        # Call get_hog_features() with vis=False, feature_vec=True
-#            if hog_channel == 'ALL':
-#                hog_features = []
-#                for channel in range(feature_image.shape[2]):
-#                    hog_features.append(get_hog_features(feature_image[:,:,channel], 
-#                                        orient, pix_per_cell, cell_per_block, 
-#                                        vis=False, feature_vec=True))
-#                hog_features = np.ravel(hog_features)        
-#            else:
-#                hog_features = get_hog_features(feature_image[:,:,hog_channel], orient, 
-#                            pix_per_cell, cell_per_block, vis=False, feature_vec=True)
-#            # Append the new feature vector to the features list
-#            file_features.append(hog_features)
         file_features = single_img_features(image, color_space=color_space, 
                             spatial_size=spatial_size, hist_bins=hist_bins, 
                             orient=orient, pix_per_cell=pix_per_cell, 
