@@ -12,7 +12,7 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 [image1]: ./output_images/hog_GTI_Right_image0333.png
 [image2]: ./output_images/hog_GTI_image1007.png
-[image3]: ./examples/sliding_windows.jpg
+[image3]: ./output_images/normalize_feats.png
 [image4]: ./examples/sliding_window.jpg
 [image5]: ./examples/bboxes_and_heat.png
 [image6]: ./examples/labels_map.png
@@ -49,7 +49,14 @@ I tried various combinations of parameters and found that `orientations = 11` gi
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I trained a linear SVM using...
+First, I prepare features and labels for training a SVM classifier. I read in the images with and without vehicles in the code cell under the title `1.3 Feature Normalization`. I then use function `extract_features()` which is in line 53 to 71 in the `lesson_functions.py` to extract binned color features, color histogram features as well as HOG features from each image. The length of a feature vector is 4,356. To normalize features to have mean zero and unit standard deviation, I apply `StandardScaler()` from `sklearn` to the vertically stacked feature array. An example of feature normalization is:
+
+![alt text][image3]
+
+
+Next, I prepare labels by creating an array with `1`'s for feature row numbers with vehicles and `0`'s for feature row numbers without any vehicle. I then use `train_test_split()` to randomly splits the data into 80% for training model and 20% for testing the model. This is done in the code cells under the title `1.4 Preparation`.
+
+Finally, I train a linear SVM model by using cross validation to search for the optimal `C` parameter using the `GridSearchCV()` function. In the code cells under the title `1.5 Tune SVM parameters`, I found that `C = 0.0003` is the best for this set of data. Then I train a SVM model using this parameter and test it on the testing data to confirm that the model (svc_final) works well on unseen data: `Accuracy = 0.9958` and `F1_score = 0.9957`.
 
 ### Sliding Window Search
 
