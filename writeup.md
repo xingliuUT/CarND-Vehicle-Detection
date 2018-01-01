@@ -1,9 +1,4 @@
-## Writeup Template
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
-**Vehicle Detection Project**
+## Vehicle Detection Project
 
 The goals / steps of this project are the following:
 
@@ -15,8 +10,8 @@ The goals / steps of this project are the following:
 * Estimate a bounding box for vehicles detected.
 
 [//]: # (Image References)
-[image1]: ./examples/car_not_car.png
-[image2]: ./examples/HOG_example.jpg
+[image1]: ./output_images/hog_GTI_Right_image0333.png
+[image2]: ./output_images/hog_GTI_image1007.png
 [image3]: ./examples/sliding_windows.jpg
 [image4]: ./examples/sliding_window.jpg
 [image5]: ./examples/bboxes_and_heat.png
@@ -24,8 +19,7 @@ The goals / steps of this project are the following:
 [image7]: ./examples/output_bboxes.png
 [video1]: ./project_video.mp4
 
-## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
-### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
+Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
 ---
 ### Writeup / README
@@ -38,22 +32,20 @@ You're reading it!
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).  
+The code for this step is contained in the code cell of the IPython notebook under the title `1.1 Histogram of Oriented Gradient (HOG)` and the `get_hog_features()` function is in lines 7 through 24 of the file called `lesson_functions.py`.  
+I explored different color spaces and different parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`) to the `hog()` function from `skimage.feature`.  I select test images from each of the two classes of images with or without a vehicle and displayed three layers of each image as well as the HOG features for each layer.
 
-I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
+Here are examples using the `YCrCb` color space and HOG parameters of `orientations=11`, `pixels_per_cell=(16, 16)` and `cells_per_block=(2, 2)`.
 
+For an image that contains a vehicle:
 ![alt text][image1]
 
-I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
-
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
-
-
+For an image that doesn't contain any vehicle:
 ![alt text][image2]
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
-I tried various combinations of parameters and...
+I tried various combinations of parameters and found that `orientations = 11` gives enough resolution of orientation angle binning and not too much. I settled on `pixels_per_cell = (16, 16)` because 16x16 is a good cell size for the gradient histogram to have a significant number of pixels to sum up and have a smooth result without too much noise. I didn't change the default number of `cells_per_block = 2` which means to normalize the histogram over blocks of 2x2 cells. I was able to achieve good results without varying this parameter.
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
