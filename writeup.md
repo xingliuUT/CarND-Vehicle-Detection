@@ -13,8 +13,8 @@ The goals / steps of this project are the following:
 [image1]: ./output_images/hog_GTI_Right_image0333.png
 [image2]: ./output_images/hog_GTI_image1007.png
 [image3]: ./output_images/normalize_feats.png
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
+[image4]: ./output_images/sliding_window_search.jpg
+[image5]: ./output_images/final_pipeline.jpg
 [image6]: ./examples/labels_map.png
 [image7]: ./examples/output_bboxes.png
 [video1]: ./project_video.mp4
@@ -62,15 +62,18 @@ Finally, I train a linear SVM model by using cross validation to search for the 
 
 #### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
+I implemented a sliding window search in the code cells under the title `2. Sliding Window Search` and the functions `slide_window()` and `search_window()` are in the `lesson_functions.py` file. I decided to search the bottom half of the image because that's where the vehicles are likely to appear. For size of the searching window, I decided to use two scales: 128x128 and 96x96. I also tested using 64x64 but find such searching window redundant and produces false positives. I decided to use 70% overlapping windows because this is a appropriate value for not missing vehicles in between searching boxes and also don't create too many boxes to slow down the searching process for each image.
 
-![alt text][image3]
+Here are the pictures showing result of three window size searches on the same testing image:
+
+![alt text][image4]
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+Ultimately I searched on two scales (128x128, 96x96) using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
-![alt text][image4]
+![alt text][image5]
+
 ---
 
 ### Video Implementation
